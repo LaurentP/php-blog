@@ -1,0 +1,51 @@
+header h1 {
+    text-align: center;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+}
+
+nav a {
+    margin: 0 .5rem;
+}
+
+main {
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+img {
+    max-width: 100%;
+}
+
+form input:not([type="checkbox"]), form textarea {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+}
+
+table tr {
+    line-height: 200%;
+}
+
+table img {
+    max-height: 50px;
+    max-width: 50px;
+}
+
+.login-box {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 300px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
