@@ -21,14 +21,7 @@ define('DB_NAME', 'php-blog');
 define('DB_USER', 'root');
 define('DB_PASSWORD', '');
 
-// IONOS
-// define('DB_HOST', 'db5001918665.hosting-data.io');
-// define('DB_PORT', 3306);
-// define('DB_NAME', 'dbs1570754');
-// define('DB_USER', 'dbu1375636');
-// define('DB_PASSWORD', 'PVByb59TTn!_heK');
-
 define('ADMIN_USERNAME', 'admin');
 define('ADMIN_PASSWORD', '0Zc!KhCbpY#S2%zd5&V6');
 
-define('CONTACT_EMAIL', 'lorenzopas@gmail.com');
+define('CONTACT_EMAIL', 'your@email.tld');
