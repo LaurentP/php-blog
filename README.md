@@ -2,6 +2,8 @@
 
 C'est un blog léger et minimaliste fait en PHP, sans framework ni librairie, avec la programmation orientée objet et l'architecture MVC. Il nécessite une base de données MySQL ou MariaDB pour fonctionner.
 
+Il doit être configuré avant d'être utilisé dans le fichier config.php qui se trouve à la racine du projet.
+
 Les liens vers les articles comprennent un slug pour le référencement.
 
 On a le choix de poster ou non une image par article, qui est dupliquée sous forme de miniature pour un chargement plus rapide des pages. La transparence des .png est préservée.
