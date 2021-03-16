@@ -8,15 +8,11 @@ ob_start();
 
 <h2>New post</h2>
 
-<?php
-if ($params['error'] !== null) {
-?>
+<?php if ($params['error'] !== null): ?>
     <div>
         <p><?= $params['error'] ?></p>
     </div>
-<?php
-}
-?>
+<?php endif; ?>
 
 <form method="post" enctype="multipart/form-data">
 

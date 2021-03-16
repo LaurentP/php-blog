@@ -2,7 +2,7 @@
 
 C'est un blog léger et minimaliste fait en PHP, sans framework ni librairie, avec la programmation orientée objet et l'architecture MVC. Il nécessite une base de données MySQL ou MariaDB pour fonctionner.
 
-Il doit être configuré avant d'être utilisé dans le fichier config.php qui se trouve à la racine du projet.
+Avant de l'utiliser, il faut le configurer dans le fichier config.php, et importer le fichier php-blog.sql dans une nouvelle base de données. Ces fichiers se trouvent à la racine du projet.
 
 Les liens vers les articles comprennent un slug pour le référencement.
 

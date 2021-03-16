@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 // Prod
 // error_reporting(0);
 
-define('SITE_NAME', 'PHP Blog');
+define('ROOT_DIRECTORY', __DIR__);
 
 // XAMPP
 // define('HTTP_HOST', 'localhost/projects/php-blog/public');
@@ -23,5 +23,7 @@ define('DB_PASSWORD', '');
 
 define('ADMIN_USERNAME', 'admin');
 define('ADMIN_PASSWORD', '0Zc!KhCbpY#S2%zd5&V6');
+
+define('SITE_NAME', 'PHP Blog');
 
 define('CONTACT_EMAIL', 'your@email.tld');

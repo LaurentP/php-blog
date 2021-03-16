@@ -25,6 +25,6 @@ abstract class Controller
 
     public function render(string $target, array $params = [])
     {
-        require_once dirname(__DIR__) . '/view' . $target;
+        require_once ROOT_DIRECTORY . '/app/view' . $target;
     }
 }

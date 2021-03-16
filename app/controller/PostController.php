@@ -22,7 +22,7 @@ class PostController extends Controller
     {
         parent::__construct();
         $this->postManager = new PostManager($this->dbh);
-        $this->uploadDir = dirname(dirname(__DIR__)) . '/public/upload/post/';
+        $this->uploadDir = ROOT_DIRECTORY . '/public/upload/post/';
     }
 
     /**

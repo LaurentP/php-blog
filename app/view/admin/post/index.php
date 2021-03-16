@@ -25,7 +25,6 @@ ob_start();
     <tbody>
 
         <?php
-
         foreach ($params['postList'] as $post) {
             $image = pathinfo($post->getImage(), PATHINFO_FILENAME) . '-min.' . pathinfo($post->getImage(), PATHINFO_EXTENSION);
             if (strlen($post->getContent()) > 100) {
@@ -58,7 +57,6 @@ ob_start();
             </tr>
         <?php
         }
-
         ?>
 
     </tbody>

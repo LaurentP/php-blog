@@ -14,15 +14,11 @@
 
         <h1>Login</h1>
 
-        <?php
-        if ($params['error'] !== null) {
-        ?>
+        <?php if ($params['error'] !== null): ?>
             <div>
                 <p><?= $params['error'] ?></p>
             </div>
-        <?php
-        }
-        ?>
+        <?php endif; ?>
 
         <form method="post">
 
@@ -45,8 +41,6 @@
         </form>
 
     </div>
-
-
 
 </body>
 

@@ -8,16 +8,13 @@ ob_start();
 
 <h2>Contact</h2>
 
-<?php
-if ($params['result'] !== null) {
+<?php if ($params['result'] !== null):
     $alertType = array_keys($params['result'])[0];
 ?>
     <div>
         <p><?= $params['result'][$alertType] ?></p>
     </div>
-<?php
-}
-?>
+<?php endif; ?>
 
 <form method="post">
 
