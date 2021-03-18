@@ -1,8 +1,8 @@
 <?php
 
-$pageTitle = 'Contact';
+$pageLayout = ROOT_DIRECTORY . '/app/view/layout.php';
 
-ob_start();
+$pageTitle = 'Contact';
 
 ?>
 
@@ -44,9 +44,3 @@ ob_start();
     <button type="submit">Send</button>
 
 </form>
-
-<?php
-
-$content = ob_get_clean();
-
-require_once dirname(__DIR__) . '/layout.php';

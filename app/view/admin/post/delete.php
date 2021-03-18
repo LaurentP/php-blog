@@ -1,8 +1,8 @@
 <?php
 
-$pageTitle = 'Delete post';
+$pageLayout = ROOT_DIRECTORY . '/app/view/admin/layout.php';
 
-ob_start();
+$pageTitle = 'Delete post';
 
 ?>
 
@@ -12,12 +12,12 @@ ob_start();
 <p><?= $params['post']->getCreatedAt() ?></p>
 <?php
 if ($params['post']->getImage() !== '') {
-    $imagePath = dirname(__DIR__, 4) . '/public/upload/post/' . $params['post']->getImage();
+    $imagePath = ROOT_DIRECTORY . '/public/upload/post/' . $params['post']->getImage();
     if (file_exists($imagePath)) {
         ?><img src="http://<?= HTTP_HOST . '/upload/post/' . $params['post']->getImage() ?>" alt="<?= $params['post']->getTitle() ?>"><?php
-        }
     }
-    ?>
+}
+?>
 <p><?= $params['post']->getContent() ?></p>
 
 <form method="post">
@@ -27,9 +27,3 @@ if ($params['post']->getImage() !== '') {
     <button type="submit">Delete</button>
 
 </form>
-
-<?php
-
-$content = ob_get_clean();
-
-require_once dirname(__DIR__) . '/layout.php';

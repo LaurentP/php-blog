@@ -1,8 +1,8 @@
 <?php
 
-$pageTitle = 'Edit post';
+$pageLayout = ROOT_DIRECTORY . '/app/view/admin/layout.php';
 
-ob_start();
+$pageTitle = 'Edit post';
 
 ?>
 
@@ -52,9 +52,3 @@ ob_start();
     <button type="submit">Edit</button>
 
 </form>
-
-<?php
-
-$content = ob_get_clean();
-
-require_once dirname(__DIR__) . '/layout.php';

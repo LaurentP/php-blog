@@ -1,15 +1,9 @@
 <?php
 
-$pageTitle = 'Admin';
+$pageLayout = 'layout.php';
 
-ob_start();
+$pageTitle = 'Admin';
 
 ?>
 
 <h2>Admin</h2>
-
-<?php
-
-$content = ob_get_clean();
-
-require_once 'layout.php';

@@ -19,7 +19,7 @@
     </header>
 
     <div>
-        <?= $content ?>
+        <?= $pageContent ?>
     </div>
 
 </body>

@@ -1,8 +1,8 @@
 <?php
 
-$pageTitle = 'Admin';
+$pageLayout = ROOT_DIRECTORY . '/app/view/admin/layout.php';
 
-ob_start();
+$pageTitle = 'Admin';
 
 ?>
 
@@ -39,7 +39,7 @@ ob_start();
                 <td>
                     <?php
                     if ($post->getImage() !== '') {
-                        $imagePath = dirname(__DIR__, 4) . '/public/upload/post/' . $post->getImage();
+                        $imagePath = ROOT_DIRECTORY . '/public/upload/post/' . $post->getImage();
                         if (file_exists($imagePath)) {
                             ?><img src="http://<?= HTTP_HOST . '/upload/post/' . $post->getImage() ?>" alt="<?= $post->getTitle() ?>"><?php
                         }
@@ -81,9 +81,3 @@ ob_start();
     }
     ?>
 </div>
-
-<?php
-
-$content = ob_get_clean();
-
-require_once dirname(__DIR__) . '/layout.php';

@@ -1,8 +1,8 @@
 <?php
 
-$pageTitle = 'Home';
+$pageLayout = ROOT_DIRECTORY . '/app/view/layout.php';
 
-ob_start();
+$pageTitle = 'Home';
 
 ?>
 
@@ -24,7 +24,7 @@ foreach ($params['latestPosts'] as $post) {
         <time><?= $post->getCreatedAt() ?></time>
         <?php
         if ($post->getImage() !== '') {
-            $imagePath = dirname(__DIR__, 3) . '/public/upload/post/' . $post->getImage();
+            $imagePath = ROOT_DIRECTORY . '/public/upload/post/' . $post->getImage();
             if (file_exists($imagePath)) {
                 ?><img src="http://<?= HTTP_HOST . '/upload/post/' . $post->getImage() ?>" alt="<?= $post->getTitle() ?>"><?php
             }
@@ -40,9 +40,3 @@ foreach ($params['latestPosts'] as $post) {
 <div>
     <p><a href="http://<?= HTTP_HOST ?>/blog">View all</a></p>
 </div>
-
-<?php
-
-$content = ob_get_clean();
-
-require_once dirname(__DIR__) . '/layout.php';

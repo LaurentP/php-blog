@@ -9,7 +9,7 @@ spl_autoload_register(function ($className) {
     $pos = count($className) - 1;
     $className = $className[$pos];
 
-    foreach (glob(dirname(__DIR__) . '/app/*/*.php') as $fileName) {
+    foreach (glob(ROOT_DIRECTORY . '/app/*/*.php') as $fileName) {
         if (pathinfo($fileName, PATHINFO_FILENAME) === $className) {
             require_once $fileName;
         }

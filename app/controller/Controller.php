@@ -25,6 +25,19 @@ abstract class Controller
 
     public function render(string $target, array $params = [])
     {
+        $pageLayout = null;
+
+        ob_start();
+
         require_once ROOT_DIRECTORY . '/app/view' . $target;
+
+        $pageContent = ob_get_clean();
+
+        if ($pageLayout !== null) {
+            require_once $pageLayout;
+        }
+        else {
+            echo $pageContent;
+        }
     }
 }

@@ -15,18 +15,14 @@
             <a href="http://<?= HTTP_HOST ?>/blog">Blog</a>
             <a href="http://<?= HTTP_HOST ?>/contact">Contact</a>
             <a href="http://<?= HTTP_HOST ?>/admin">Admin</a>
-            <?php
-                if (isset($_SESSION['admin'])) {
-                    ?>
-                        <a href="http://<?= HTTP_HOST ?>/admin/logout">Logout</a>
-                    <?php
-                }
-            ?>
+            <?php if (isset($_SESSION['admin'])): ?>
+                <a href="http://<?= HTTP_HOST ?>/admin/logout">Logout</a>
+            <?php endif; ?>
         </nav>
     </header>
 
     <main>
-        <?= $content ?>
+        <?= $pageContent ?>
     </main>
 
 </body>

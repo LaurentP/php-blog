@@ -22,7 +22,7 @@ define('DB_USER', 'root');
 define('DB_PASSWORD', '');
 
 define('ADMIN_USERNAME', 'admin');
-define('ADMIN_PASSWORD', '0Zc!KhCbpY#S2%zd5&V6');
+define('ADMIN_PASSWORD', '');
 
 define('SITE_NAME', 'PHP Blog');
 
