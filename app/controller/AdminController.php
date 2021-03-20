@@ -20,7 +20,7 @@ class AdminController extends Controller
     public function index()
     {
         if (isset($_SESSION['admin'])) {
-            $this->post();
+            return header('Location:/admin/post');
         } else {
             $this->login();
         }
@@ -29,7 +29,7 @@ class AdminController extends Controller
     public function login()
     {
         if (isset($_SESSION['admin'])) {
-            return $this->post();
+            return header('Location:/admin/post');
         }
 
         $error = null;
@@ -37,7 +37,7 @@ class AdminController extends Controller
         if (!empty($_POST['username']) && !empty($_POST['password'])) {
             if ($_POST['username'] === ADMIN_USERNAME && $_POST['password'] === ADMIN_PASSWORD) {
                 $_SESSION['admin'] = true;
-                return $this->post();
+                return header('Location:/admin/post');
             } else {
                 $error = 'Incorrect login or password.';
             }
@@ -53,34 +53,5 @@ class AdminController extends Controller
         unset($_SESSION['admin']);
         session_destroy();
         header('Location:' . $_SERVER['HTTP_REFERER']);
-    }
-
-    /**
-     * @param array $params
-     */
-    public function post(array $params = [])
-    {
-        if (!isset($_SESSION['admin'])) {
-            return $this->login();
-        }
-
-        $currentPage = $params[1] ?? 1;
-        $currentPage = (int) $currentPage;
-
-        $limit = 10;
-        $offset = 0;
-        if ($currentPage > 1) {
-            $offset = ($currentPage - 1) * 10;
-        }
-        $count = (int) $this->postManager->count([]);
-        $requiredPages = ceil($count / $limit);
-
-        $postList = $this->postManager->read([], $limit, $offset);
-
-        $this->render('/admin/post/index.php', [
-            'currentPage' => $currentPage,
-            'requiredPages' => $requiredPages,
-            'postList' => $postList
-        ]);
     }
 }

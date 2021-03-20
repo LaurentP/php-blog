@@ -24,15 +24,22 @@ $url =  $_SERVER['REQUEST_URI'] ?? '';
 
 $router = new App\Controller\Router($url);
 
+// Les caractères spéciaux " ? " et " = " doivent être renseignés pour la transmission des variables GET et précédés d'un antislash " \ ".
 $router->add('/', 'App\Controller\HomeController:index')
     ->add('/blog', 'App\Controller\PostController:index')
+    ->add('/blog/search', 'App\Controller\PostController:search')
+    ->add('/blog/search\?q\={query}', 'App\Controller\PostController:search')
+    ->add('/blog/search\?q\={query}&p\={page}', 'App\Controller\PostController:search')
     ->add('/post/{slug}-{id}', 'App\Controller\PostController:show')
     ->add('/admin', 'App\Controller\AdminController:index')
     ->add('/admin/logout', 'App\Controller\AdminController:logout')
-    ->add('/admin/post/new', 'App\Controller\PostController:new')
-    ->add('/admin/post/edit/{id}', 'App\Controller\PostController:edit')
-    ->add('/admin/post/delete/{id}', 'App\Controller\PostController:delete')
-    ->add('/admin/{page}', 'App\Controller\AdminController:post')
+    ->add('/admin/post/search\?q\={query}', 'App\Controller\AdminPostController:search')
+    ->add('/admin/post/search\?q\={query}&p\={page}', 'App\Controller\AdminPostController:search')
+    ->add('/admin/post/new', 'App\Controller\AdminPostController:new')
+    ->add('/admin/post/edit/{id}', 'App\Controller\AdminPostController:edit')
+    ->add('/admin/post/delete/{id}', 'App\Controller\AdminPostController:delete')
+    ->add('/admin/post', 'App\Controller\AdminPostController:post')
+    ->add('/admin/post/{page}', 'App\Controller\AdminPostController:post')
     ->add('/contact', 'App\Controller\ContactController:index')
     ->add('/{page}', 'App\Controller\PostController:index');
 

@@ -6,15 +6,15 @@ $pageTitle = 'Delete post';
 
 ?>
 
-<h2>Delete post</h2>
+<h1>Delete post</h1>
 
 <h3><?= $params['post']->getTitle() ?></h3>
-<p><?= $params['post']->getCreatedAt() ?></p>
+<p><?= date('F j, Y, g:i A', strtotime($params['post']->getCreatedAt())) ?></p>
 <?php
 if ($params['post']->getImage() !== '') {
     $imagePath = ROOT_DIRECTORY . '/public/upload/post/' . $params['post']->getImage();
     if (file_exists($imagePath)) {
-        ?><img src="http://<?= HTTP_HOST . '/upload/post/' . $params['post']->getImage() ?>" alt="<?= $params['post']->getTitle() ?>"><?php
+        ?><img src="<?= HTTP_HOST . '/upload/post/' . $params['post']->getImage() ?>" alt="<?= $params['post']->getTitle() ?>"><?php
     }
 }
 ?>
@@ -24,6 +24,6 @@ if ($params['post']->getImage() !== '') {
 
     <input type="hidden" name="delete" value="true">
 
-    <button type="submit">Delete</button>
+    <button type="submit" class="btn">Delete</button>
 
 </form>

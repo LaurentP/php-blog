@@ -6,6 +6,8 @@ Avant de l'utiliser, il faut le configurer dans le fichier config.php, et import
 
 Les liens vers les articles comprennent un slug pour le référencement.
 
+La possibilité de rechercher des articles par mots clés est présente du côté des visiteurs et du côté de l'administration.
+
 On a le choix de poster ou non une image par article, qui est dupliquée sous forme de miniature pour un chargement plus rapide des pages. La transparence des .png est préservée.
 
 Il possède un routeur qui peut être utilisé pour la création de nouveaux contrôleurs, une interface d'administration, et un formulaire de contact.

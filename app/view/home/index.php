@@ -6,37 +6,29 @@ $pageTitle = 'Home';
 
 ?>
 
-<h2>Home</h2>
+<h1>Home</h1>
 
-<h3>Latest posts</h3>
+<h2>Latest posts</h2>
 
-<?php
-foreach ($params['latestPosts'] as $post) {
-    $image = pathinfo($post->getImage(), PATHINFO_FILENAME) . '-min.' . pathinfo($post->getImage(), PATHINFO_EXTENSION);
-    if (strlen($post->getContent()) > 100) {
-        $content = substr($post->getContent(), 0, 100) . '...';
-    } else {
-        $content = $post->getContent();
-    }
-?>
+<?php foreach ($params['latestPosts'] as $post) : ?>
     <div>
-    <h4><?= $post->getTitle() ?></h4>
-        <time><?= $post->getCreatedAt() ?></time>
+        <h3><?= $post->getTitle() ?></h3>
+        <time><?= date('F j, Y, g:i A', strtotime($post->getCreatedAt())) ?></time>
         <?php
-        if ($post->getImage() !== '') {
-            $imagePath = ROOT_DIRECTORY . '/public/upload/post/' . $post->getImage();
+        if ($post->getThumbnailImage() !== '') {
+            $imagePath = ROOT_DIRECTORY . '/public/upload/post/' . $post->getThumbnailImage();
             if (file_exists($imagePath)) {
-                ?><img src="http://<?= HTTP_HOST . '/upload/post/' . $post->getImage() ?>" alt="<?= $post->getTitle() ?>"><?php
+        ?>
+                <img src="<?= HTTP_HOST . '/upload/post/' . $post->getThumbnailImage() ?>" alt="<?= $post->getTitle() ?>">
+        <?php
             }
         }
         ?>
-        <p><?= $post->getContent() ?></p>
+        <p><?= $post->getShortContent() ?></p>
         <a href="./post/<?= $post->getSlug() . '-' . $post->getId() ?>">Read</a>
     </div>
-<?php
-}
-?>
+<?php endforeach; ?>
 
 <div>
-    <p><a href="http://<?= HTTP_HOST ?>/blog">View all</a></p>
+    <p><a href="<?= HTTP_HOST ?>/blog">View all</a></p>
 </div>

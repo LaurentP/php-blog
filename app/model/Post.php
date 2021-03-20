@@ -131,9 +131,33 @@ class Post
     /**
      * @return string
      */
+    public function getThumbnailImage(): string
+    {
+        if ($this->image !== '') {
+            return pathinfo($this->image, PATHINFO_FILENAME) . '-min.' . pathinfo($this->image, PATHINFO_EXTENSION);
+        } else {
+            return '';
+        }
+    }
+
+    /**
+     * @return string
+     */
     public function getContent(): string
     {
         return $this->content;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShortContent(): string
+    {
+        if (strlen($this->content) > 100) {
+            return substr($this->content, 0, 100) . '...';
+        } else {
+            return $this->content;
+        }
     }
 
     /**

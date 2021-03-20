@@ -6,7 +6,7 @@ $pageTitle = 'Contact';
 
 ?>
 
-<h2>Contact</h2>
+<h1>Contact</h1>
 
 <?php if ($params['result'] !== null):
     $alertType = array_keys($params['result'])[0];
@@ -16,7 +16,7 @@ $pageTitle = 'Contact';
     </div>
 <?php endif; ?>
 
-<form method="post">
+<form class="contact-form" method="post">
 
     <p>
         <label for="fullname">Name</label>
@@ -41,6 +41,6 @@ $pageTitle = 'Contact';
 
     <input type="hidden" name="hp">
 
-    <button type="submit">Send</button>
+    <button type="submit" class="btn">Send</button>
 
 </form>

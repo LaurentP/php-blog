@@ -8,6 +8,8 @@ $pageTitle = 'Admin';
 
 <h1>Posts</h1>
 
+<h2>Search results : <?= $params['count'] ?> found</h2>
+
 <table>
     <thead>
         <tr>
@@ -45,17 +47,17 @@ $pageTitle = 'Admin';
     <?php
     if ($params['currentPage'] > 1) {
     ?>
-        <a href="<?= HTTP_HOST ?>/admin/post/<?= $params['currentPage'] - 1 ?>">Prev</a>
+        <a href="<?= HTTP_HOST ?>/admin/post/search?q=<?= $params['query'] ?>&p=<?= $params['currentPage'] - 1 ?>">Prev</a>
     <?php
     }
     for ($i = 1; $i <= $params['requiredPages']; $i++) {
     ?>
-        <a href="<?= HTTP_HOST ?>/admin/post/<?= $i ?>"><?= $i ?></a>
+        <a href="<?= HTTP_HOST ?>/admin/post/search?q=<?= $params['query'] ?>&p=<?= $i ?>"><?= $i ?></a>
     <?php
     }
     if ($params['currentPage'] < $params['requiredPages']) {
     ?>
-        <a href="<?= HTTP_HOST ?>/admin/post/<?= $params['currentPage'] + 1 ?>">Next</a>
+        <a href="<?= HTTP_HOST ?>/admin/post/search?q=<?= $params['query'] ?>&p=<?= $params['currentPage'] + 1 ?>">Next</a>
     <?php
     }
     ?>

@@ -9,10 +9,10 @@ error_reporting(E_ALL);
 define('ROOT_DIRECTORY', __DIR__);
 
 // XAMPP
-// define('HTTP_HOST', 'localhost/projects/php-blog/public');
+// define('HTTP_HOST', 'http://localhost/projects/php-blog/public');
 
 // Production et serveur interne de PHP
-define('HTTP_HOST', $_SERVER['HTTP_HOST']);
+define('HTTP_HOST', 'http://' . $_SERVER['HTTP_HOST']);
 
 // DEV
 define('DB_HOST', 'localhost');
@@ -22,7 +22,7 @@ define('DB_USER', 'root');
 define('DB_PASSWORD', '');
 
 define('ADMIN_USERNAME', 'admin');
-define('ADMIN_PASSWORD', '');
+define('ADMIN_PASSWORD', 'admin');
 
 define('SITE_NAME', 'PHP Blog');
 

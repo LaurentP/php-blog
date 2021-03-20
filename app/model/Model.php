@@ -76,9 +76,7 @@ abstract class Model
             foreach ($keys as $col) {
                 $request .= "$col = :$col";
                 $i++;
-                if ($i < $countWhere) {
-                    $request .= ' AND ';
-                }
+                if ($i < $countWhere) $request .= ' AND ';
             }
 
             $request .= ' ORDER BY id DESC';
@@ -86,9 +84,7 @@ abstract class Model
             $request = 'SELECT * FROM ' . $this->table . ' ORDER BY id DESC';
         }
 
-        if ($limit > 0) {
-            $request .= " LIMIT $limit OFFSET $offset";
-        }
+        if ($limit > 0) $request .= " LIMIT $limit OFFSET $offset";
 
         $pdoStatement = $this->execute($request, $where);
 
@@ -114,9 +110,7 @@ abstract class Model
             foreach ($keys as $col) {
                 $request .= "$col = :$col";
                 $i++;
-                if ($i < $countWhere) {
-                    $request .= ' AND ';
-                }
+                if ($i < $countWhere) $request .= ' AND ';
             }
         }
 
@@ -138,9 +132,7 @@ abstract class Model
         $keys = array_keys($data);
 
         foreach ($keys as $key) {
-            if ($i > 0) {
-                $request .= ', ';
-            }
+            if ($i > 0) $request .= ', ';
             $i++;
             $request .= "$key = :$key";
         }

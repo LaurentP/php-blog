@@ -4,18 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="http://<?= HTTP_HOST ?>/asset/css/style.css">
+    <link rel="stylesheet" href="<?= HTTP_HOST ?>/asset/css/style.css">
     <title>Admin - <?= SITE_NAME ?></title>
 </head>
 
 <body>
 
-    <div class="login-box">
+    <div class="login">
 
         <h1>Login</h1>
 
         <?php if ($params['error'] !== null): ?>
-            <div>
+            <div class="text-error">
                 <p><?= $params['error'] ?></p>
             </div>
         <?php endif; ?>
@@ -36,7 +36,7 @@
                 <input type="password" name="password" id="password" required>
             </p>
 
-            <button type="submit">Login</button>
+            <button type="submit" class="btn">Login</button>
 
         </form>
 

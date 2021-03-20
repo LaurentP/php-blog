@@ -8,6 +8,8 @@ $pageTitle = 'Blog';
 
 <h1>Blog</h1>
 
+<h2>Search results : <?= $params['count'] ?> found</h2>
+
 <?php foreach ($params['postList'] as $post) : ?>
     <div>
         <h3><?= $post->getTitle() ?></h3>
@@ -31,17 +33,17 @@ $pageTitle = 'Blog';
     <?php
     if ($params['currentPage'] > 1) {
     ?>
-        <a href="./<?= $params['currentPage'] - 1 ?>">Prev</a>
+        <a href="./search?q=<?= $params['query'] ?>&p=<?= $params['currentPage'] - 1 ?>">Prev</a>
     <?php
     }
     for ($i = 1; $i <= $params['requiredPages']; $i++) {
     ?>
-        <a href="./<?= $i ?>"><?= $i ?></a>
+        <a href="./search?q=<?= $params['query'] ?>&p=<?= $i ?>"><?= $i ?></a>
     <?php
     }
     if ($params['currentPage'] < $params['requiredPages']) {
     ?>
-        <a href="./<?= $params['currentPage'] + 1 ?>">Next</a>
+        <a href="./search?q=<?= $params['query'] ?>&p=<?= $params['currentPage'] + 1 ?>">Next</a>
     <?php
     }
     ?>

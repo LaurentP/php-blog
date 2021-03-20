@@ -6,7 +6,7 @@ $pageTitle = 'Edit post';
 
 ?>
 
-<h2>Edit post</h2>
+<h1>Edit post</h1>
 
 <?php if ($params['error'] !== null): ?>
     <div>
@@ -14,7 +14,7 @@ $pageTitle = 'Edit post';
     </div>
 <?php endif; ?>
 
-<form method="post" enctype="multipart/form-data">
+<form class="post-form" method="post" enctype="multipart/form-data">
 
     <p>
         <label for="title">Title</label>
@@ -45,10 +45,10 @@ $pageTitle = 'Edit post';
     </p>
 
     <p>
-        <label for="enabled">Enabled</label>
+        <label for="enabled">Online</label>
         <input type="checkbox" name="enabled" id="enabled" <?= $params['post']->getEnabled() === true ? ' checked' : '' ?>>
     </p>
 
-    <button type="submit">Edit</button>
+    <button type="submit" class="btn">Edit</button>
 
 </form>
