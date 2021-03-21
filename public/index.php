@@ -30,6 +30,7 @@ $router->add('/', 'App\Controller\HomeController:index')
     ->add('/blog/search', 'App\Controller\PostController:search')
     ->add('/blog/search\?q\={query}', 'App\Controller\PostController:search')
     ->add('/blog/search\?q\={query}&p\={page}', 'App\Controller\PostController:search')
+    ->add('/blog/{page}', 'App\Controller\PostController:index')
     ->add('/post/{slug}-{id}', 'App\Controller\PostController:show')
     ->add('/admin', 'App\Controller\AdminController:index')
     ->add('/admin/logout', 'App\Controller\AdminController:logout')
@@ -40,7 +41,6 @@ $router->add('/', 'App\Controller\HomeController:index')
     ->add('/admin/post/delete/{id}', 'App\Controller\AdminPostController:delete')
     ->add('/admin/post', 'App\Controller\AdminPostController:post')
     ->add('/admin/post/{page}', 'App\Controller\AdminPostController:post')
-    ->add('/contact', 'App\Controller\ContactController:index')
-    ->add('/{page}', 'App\Controller\PostController:index');
+    ->add('/contact', 'App\Controller\ContactController:index');
 
 $router->run();

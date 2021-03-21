@@ -19,7 +19,9 @@ $pageTitle = 'Home';
             $imagePath = ROOT_DIRECTORY . '/public/upload/post/' . $post->getThumbnailImage();
             if (file_exists($imagePath)) {
         ?>
-                <img src="<?= HTTP_HOST . '/upload/post/' . $post->getThumbnailImage() ?>" alt="<?= $post->getTitle() ?>">
+                <div>
+                    <img src="<?= HTTP_HOST . '/upload/post/' . $post->getThumbnailImage() ?>" alt="<?= $post->getTitle() ?>">
+                </div>
         <?php
             }
         }

@@ -13,7 +13,11 @@ $pageTitle = $params['post']->getTitle();
     $imageDir = ROOT_DIRECTORY . '/public/upload/post/';
     $imagePath = $imageDir . $params['post']->getImage();
     if ($imagePath !== $imageDir && file_exists($imagePath)) {
-        ?><img src="<?= HTTP_HOST . '/upload/post/' . $params['post']->getImage() ?>" alt="<?= $params['post']->getTitle() ?>"><?php
+        ?>
+        <div>
+            <img src="<?= HTTP_HOST . '/upload/post/' . $params['post']->getImage() ?>" alt="<?= $params['post']->getTitle() ?>">
+        </div>
+        <?php
     }
     ?>
     <p><?= $params['post']->getContent() ?></p>

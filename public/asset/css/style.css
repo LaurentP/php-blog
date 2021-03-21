@@ -20,6 +20,10 @@ a {
     color: #4169e1;
 }
 
+img {
+    max-width: 100%;
+}
+
 header {
     position: sticky;
     top: 0;
