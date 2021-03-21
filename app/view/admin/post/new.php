@@ -42,6 +42,8 @@ $pageTitle = 'New post';
         <input type="checkbox" name="enabled" id="enabled" checked>
     </p>
 
+    <input type="hidden" name="csrf_token" value="<?= $params['csrf_token'] ?>">
+
     <button type="submit" class="btn">Post</button>
 
 </form>

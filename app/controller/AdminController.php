@@ -2,21 +2,8 @@
 
 namespace App\Controller;
 
-use App\Model\PostManager;
-
 class AdminController extends Controller
 {
-    /**
-     * @var PostManager
-     */
-    private $postManager;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->postManager = new PostManager($this->dbh);
-    }
-
     public function index()
     {
         if (isset($_SESSION['admin'])) {
@@ -28,15 +15,15 @@ class AdminController extends Controller
 
     public function login()
     {
-        if (isset($_SESSION['admin'])) {
-            return header('Location:/admin/post');
-        }
+        if (isset($_SESSION['admin'])) return header('Location:/admin/post');
 
         $error = null;
 
         if (!empty($_POST['username']) && !empty($_POST['password'])) {
             if ($_POST['username'] === ADMIN_USERNAME && $_POST['password'] === ADMIN_PASSWORD) {
-                $_SESSION['admin'] = true;
+                $_SESSION['admin'] = [
+                    'csrf_token' => md5(uniqid())
+                ];
                 return header('Location:/admin/post');
             } else {
                 $error = 'Incorrect login or password.';

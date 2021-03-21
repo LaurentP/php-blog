@@ -88,34 +88,41 @@ class AdminPostController extends Controller
 
         $error = null;
 
-        if (!empty($_POST['title']) && isset($_FILES['image']) && !empty($_POST['content'])) {
+        if (!empty($_POST['title']) && isset($_FILES['image']) && !empty($_POST['content']) && !empty($_POST['csrf_token'])) {
 
-            $result = ImageUploader::upload($_FILES['image'], $this->uploadDir);
+            if (isset($_SESSION['admin']['csrf_token']) && ($_SESSION['admin']['csrf_token'] !== $_POST['csrf_token'])) {
+                $error = 'Failed access attempt.';
+            }
 
-            // $result['error'] retourne une chaîne de caractères vide s'il n'y a pas d'image envoyée ou si l'image envoyée est valide.
-            if ($result['error'] === '') {
-                $newTitle = htmlspecialchars($_POST['title']);
-                $newSlug = TextToSlug::convert($newTitle);
-                $imageFileName = $result['file_name'];
-                $enabled = (int) isset($_POST['enabled']);
-                $data = [
-                    'title' => $newTitle,
-                    'slug' => $newSlug,
-                    'image' => $imageFileName,
-                    'content' => htmlspecialchars($_POST['content']),
-                    'created_at' => date('Y-m-d H:i:s'),
-                    'enabled' => $enabled
-                ];
+            if ($error === null) {
 
-                $this->postManager->create($data);
-                header('Location:/admin');
-            } else {
-                $error = $result['error'];
+                $imageResult = ImageUploader::upload($_FILES['image'], $this->uploadDir);
+
+                // $result['error'] retourne une chaîne de caractères vide s'il n'y a pas d'image envoyée ou si l'image envoyée est valide.
+                if ($imageResult['error'] === '') {
+                    $newTitle = htmlspecialchars($_POST['title']);
+                    $newSlug = TextToSlug::convert($newTitle);
+                    $enabled = (int) isset($_POST['enabled']);
+                    $data = [
+                        'title' => $newTitle,
+                        'slug' => $newSlug,
+                        'image' => $imageResult['file_name'],
+                        'content' => htmlspecialchars($_POST['content']),
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'enabled' => $enabled
+                    ];
+
+                    $this->postManager->create($data);
+                    header('Location:/admin');
+                } else {
+                    $error = $imageResult['error'];
+                }
             }
         }
 
         $this->render('/admin/post/new.php', [
-            'error' => $error
+            'error' => $error,
+            'csrf_token' => $_SESSION['admin']['csrf_token']
         ]);
     }
 
@@ -132,46 +139,54 @@ class AdminPostController extends Controller
 
         $error = null;
 
-        if (!empty($_POST['title']) && !empty($_POST['slug']) && isset($_FILES['image']) && !empty($_POST['content'])) {
+        if (!empty($_POST['title']) && !empty($_POST['slug']) && isset($_FILES['image']) && !empty($_POST['content']) && !empty($_POST['csrf_token'])) {
 
-            $result = ImageUploader::upload($_FILES['image'], $this->uploadDir);
+            if (isset($_SESSION['admin']['csrf_token']) && ($_SESSION['admin']['csrf_token'] !== $_POST['csrf_token'])) {
+                $error = 'Failed access attempt.';
+            }
 
-            // $result['error'] retourne une chaîne de caractères vide s'il n'y a pas d'image envoyée ou si l'image envoyée est valide.
-            if ($result['error'] === '') {
+            if ($error === null) {
 
-                $newTitle = htmlspecialchars($_POST['title']);
-                $newSlug = TextToSlug::convert(htmlspecialchars($_POST['slug']));
-                $enabled = (int) isset($_POST['enabled']);
-                $data = [
-                    'title' => $newTitle,
-                    'slug' => $newSlug,
-                    'content' => htmlspecialchars($_POST['content']),
-                    'enabled' => $enabled
-                ];
+                $imageResult = ImageUploader::upload($_FILES['image'], $this->uploadDir);
 
-                // Si une image est envoyée, remplace le nom de l'image et supprime l'ancienne image
-                if ($result['file_name'] !== '') {
-                    $data['image'] = $result['file_name'];
-                    $imageToDelete = $this->uploadDir . $postList[0]->getImage();
-                    if (file_exists($imageToDelete)) {
-                        unlink($imageToDelete);
+                // $result['error'] retourne une chaîne de caractères vide s'il n'y a pas d'image envoyée ou si l'image envoyée est valide.
+                if ($imageResult['error'] === '') {
+
+                    $newTitle = htmlspecialchars($_POST['title']);
+                    $newSlug = TextToSlug::convert(htmlspecialchars($_POST['slug']));
+                    $enabled = (int) isset($_POST['enabled']);
+                    $data = [
+                        'title' => $newTitle,
+                        'slug' => $newSlug,
+                        'content' => htmlspecialchars($_POST['content']),
+                        'enabled' => $enabled
+                    ];
+
+                    // Si une image est envoyée, remplace le nom de l'image et supprime l'ancienne image
+                    if ($imageResult['file_name'] !== '') {
+                        $data['image'] = $imageResult['file_name'];
+                        $imageToDelete = $this->uploadDir . $postList[0]->getImage();
+                        if (file_exists($imageToDelete)) {
+                            unlink($imageToDelete);
+                        }
+                        $imageToDelete = $this->uploadDir . pathinfo($postList[0]->getImage(), PATHINFO_FILENAME) . '-min.' . pathinfo($postList[0]->getImage(), PATHINFO_EXTENSION);
+                        if (file_exists($imageToDelete)) {
+                            unlink($imageToDelete);
+                        }
                     }
-                    $imageToDelete = $this->uploadDir . pathinfo($postList[0]->getImage(), PATHINFO_FILENAME) . '-min.' . pathinfo($postList[0]->getImage(), PATHINFO_EXTENSION);
-                    if (file_exists($imageToDelete)) {
-                        unlink($imageToDelete);
-                    }
+
+                    $this->postManager->update($data, $id);
+                    header('Location:/admin');
+                } else {
+                    $error = $imageResult['error'];
                 }
-
-                $this->postManager->update($data, $id);
-                header('Location:/admin');
-            } else {
-                $error = $result['error'];
             }
         }
 
         $this->render('/admin/post/edit.php', [
             'post' => $postList[0],
-            'error' => $error
+            'error' => $error,
+            'csrf_token' => $_SESSION['admin']['csrf_token']
         ]);
     }
 
@@ -186,21 +201,33 @@ class AdminPostController extends Controller
 
         $postList = $this->postManager->read(['id' => $id], 0, 0);
 
-        if (!empty($_POST['delete']) && ($_POST['delete'] == true)) {
-            $this->postManager->delete($id);
-            $imageToDelete = $this->uploadDir . $postList[0]->getImage();
-            if (file_exists($imageToDelete)) {
-                unlink($imageToDelete);
+        $error = null;
+
+        if (!empty($_POST['delete']) && ($_POST['delete'] == true) && !empty($_POST['csrf_token'])) {
+
+            if (isset($_SESSION['admin']['csrf_token']) && ($_SESSION['admin']['csrf_token'] !== $_POST['csrf_token'])) {
+                $error = 'Failed access attempt.';
             }
-            $imageToDelete = $this->uploadDir . pathinfo($postList[0]->getImage(), PATHINFO_FILENAME) . '-min.' . pathinfo($postList[0]->getImage(), PATHINFO_EXTENSION);
-            if (file_exists($imageToDelete)) {
-                unlink($imageToDelete);
+
+            if ($error === null) {
+
+                $this->postManager->delete($id);
+                $imageToDelete = $this->uploadDir . $postList[0]->getImage();
+                if (file_exists($imageToDelete)) {
+                    unlink($imageToDelete);
+                }
+                $imageToDelete = $this->uploadDir . pathinfo($postList[0]->getImage(), PATHINFO_FILENAME) . '-min.' . pathinfo($postList[0]->getImage(), PATHINFO_EXTENSION);
+                if (file_exists($imageToDelete)) {
+                    unlink($imageToDelete);
+                }
+                header('Location:/admin');
             }
-            header('Location:/admin');
-        } else {
-            $this->render('/admin/post/delete.php', [
-                'post' => $postList[0]
-            ]);
         }
+
+        $this->render('/admin/post/delete.php', [
+            'post' => $postList[0],
+            'error' => $error,
+            'csrf_token' => $_SESSION['admin']['csrf_token']
+        ]);
     }
 }
