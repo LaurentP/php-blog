@@ -12,8 +12,10 @@ class ImageUploader
     public static function upload(array $fileData, string $uploadDir): array
     {
         if ($fileData['error'] === 0) {
-            if (in_array($fileData['type'], ['image/gif', 'image/jpeg', 'image/png'])) {
-                $fileExtension = '.' . explode('/', $fileData['type'])[1];
+
+            $fileExtension = '.' . pathinfo($fileData['name'], PATHINFO_EXTENSION);
+
+            if (in_array($fileExtension, ['.gif', '.jpg', '.jpeg', '.png'])) {
                 $newFileName = time() . $fileExtension;
                 if (!file_exists($uploadDir)) {
                     mkdir($uploadDir, 0777, true);
@@ -25,14 +27,15 @@ class ImageUploader
                     $path = $uploadDir . $newFileName;
 
                     switch ($fileExtension) {
+                        case '.gif':
+                            $src = imagecreatefromgif($path);
+                            break;
+                        case '.jpg':
                         case '.jpeg':
                             $src = imagecreatefromjpeg($path);
                             break;
                         case '.png':
                             $src = imagecreatefrompng($path);
-                            break;
-                        case '.gif':
-                            $src = imagecreatefromgif($path);
                             break;
                     }
 
@@ -63,18 +66,19 @@ class ImageUploader
                     $thumbFile = $uploadDir . pathinfo($newFileName, PATHINFO_FILENAME) . '-min' . $fileExtension;
 
                     switch ($fileExtension) {
+                        case '.gif':
+                            imagegif($temp, $thumbFile);
+                            break;
+                        case '.jpg':
                         case '.jpeg':
                             imagejpeg($temp, $thumbFile, 100);
                             break;
                         case '.png':
                             imagepng($temp, $thumbFile);
                             break;
-                        case '.gif':
-                            imagegif($temp, $thumbFile);
-                            break;
                     }
 
-
+                    
                     return [
                         'error' => '',
                         'file_name' => $newFileName
