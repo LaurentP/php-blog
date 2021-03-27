@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Asset\TextToSlug;
 use App\Model\PostManager;
-use App\Asset\ImageUploader;
+use App\Asset\ImageHandler;
 
 class AdminPostController extends Controller
 {
@@ -96,10 +96,13 @@ class AdminPostController extends Controller
 
             if ($error === null) {
 
-                $imageResult = ImageUploader::upload($_FILES['image'], $this->uploadDir);
+                $imageResult = ImageHandler::upload($_FILES['image'], $this->uploadDir);
 
                 // $result['error'] retourne une chaîne de caractères vide s'il n'y a pas d'image envoyée ou si l'image envoyée est valide.
                 if ($imageResult['error'] === '') {
+
+                    ImageHandler::createThumb($imageResult['file_name'], $this->uploadDir);
+
                     $newTitle = htmlspecialchars($_POST['title']);
                     $newSlug = TextToSlug::convert($newTitle);
                     $enabled = (int) isset($_POST['enabled']);
@@ -147,7 +150,7 @@ class AdminPostController extends Controller
 
             if ($error === null) {
 
-                $imageResult = ImageUploader::upload($_FILES['image'], $this->uploadDir);
+                $imageResult = ImageHandler::upload($_FILES['image'], $this->uploadDir);
 
                 // $result['error'] retourne une chaîne de caractères vide s'il n'y a pas d'image envoyée ou si l'image envoyée est valide.
                 if ($imageResult['error'] === '') {
@@ -164,7 +167,11 @@ class AdminPostController extends Controller
 
                     // Si une image est envoyée, remplace le nom de l'image et supprime l'ancienne image
                     if ($imageResult['file_name'] !== '') {
+
+                        ImageHandler::createThumb($imageResult['file_name'], $this->uploadDir);
+
                         $data['image'] = $imageResult['file_name'];
+
                         $imageToDelete = $this->uploadDir . $postList[0]->getImage();
                         if (file_exists($imageToDelete)) {
                             unlink($imageToDelete);
