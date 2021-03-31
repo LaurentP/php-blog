@@ -11,24 +11,28 @@ class ImageHandler
      */
     public static function upload(array $fileData, string $uploadDir): array
     {
-        if ($fileData['error'] !== 0) {
-            return ['error' => '', 'file_name' => ''];
-        }
+        if ($fileData['error'] !== 0) return ['error' => '', 'file_name' => ''];
 
-        $fileExtension = '.' . pathinfo($fileData['name'], PATHINFO_EXTENSION);
+        $fileExtension = pathinfo($fileData['name'], PATHINFO_EXTENSION);
 
-        if (!in_array($fileExtension, ['.gif', '.jpg', '.jpeg', '.png'])) {
+        if (!in_array($fileExtension, ['gif', 'jpg', 'jpeg', 'png'])) {
             return [
                 'error' => 'The file type is not accepted.',
                 'file_name' => ''
             ];
         }
 
-        $newFileName = time() . $fileExtension;
-
-        if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
+        // 5Mb = 5000000
+        if ($fileData['size'] > 5000000) {
+            return [
+                'error' => 'The file size exceeds the maximum allowed size.',
+                'file_name' => ''
+            ];
         }
+
+        $newFileName = time() . '.' . $fileExtension;
+
+        if (!file_exists($uploadDir)) mkdir($uploadDir, 0777, true);
 
         if (move_uploaded_file($fileData['tmp_name'], $uploadDir . $newFileName)) {
             return [
@@ -50,19 +54,19 @@ class ImageHandler
      */
     public static function createThumb(string $fileName, string $uploadDir): void
     {
-        $fileExtension = '.' . pathinfo($fileName, PATHINFO_EXTENSION);
+        $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
 
         $path = $uploadDir . $fileName;
 
         switch ($fileExtension) {
-            case '.gif':
+            case 'gif':
                 $src = imagecreatefromgif($path);
                 break;
-            case '.jpg':
-            case '.jpeg':
+            case 'jpg':
+            case 'jpeg':
                 $src = imagecreatefromjpeg($path);
                 break;
-            case '.png':
+            case 'png':
                 $src = imagecreatefrompng($path);
                 break;
         }
@@ -82,7 +86,7 @@ class ImageHandler
 
         $temp = imagecreatetruecolor($thumbWidth, $thumbHeight);
 
-        if ($fileExtension === '.png') {
+        if ($fileExtension === 'png') {
             imagesavealpha($temp, true);
             $alpha = imagecolorallocatealpha($temp, 0, 0, 255, 127);
             imagecolortransparent($temp, $alpha);
@@ -91,17 +95,17 @@ class ImageHandler
 
         imagecopyresampled($temp, $src, 0, 0, 0, 0, $thumbWidth, $thumbHeight, $srcWidth, $srcHeight);
 
-        $thumbFile = $uploadDir . pathinfo($fileName, PATHINFO_FILENAME) . '-min' . $fileExtension;
+        $thumbFile = $uploadDir . pathinfo($fileName, PATHINFO_FILENAME) . '-min.' . $fileExtension;
 
         switch ($fileExtension) {
-            case '.gif':
+            case 'gif':
                 imagegif($temp, $thumbFile);
                 break;
-            case '.jpg':
-            case '.jpeg':
+            case 'jpg':
+            case 'jpeg':
                 imagejpeg($temp, $thumbFile, 100);
                 break;
-            case '.png':
+            case 'png':
                 imagepng($temp, $thumbFile);
                 break;
         }

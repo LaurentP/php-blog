@@ -23,6 +23,11 @@ class Router
     private $params = [];
 
     /**
+     * @var string
+     */
+    private $errorAction;
+
+    /**
      * @param string $url Contient la portion d'url entrée par le navigateur qui suit l'adresse du site
      */
     public function __construct(string $url)
@@ -45,6 +50,18 @@ class Router
     }
 
     /**
+     * Ajoute l'action à exécuter en cas d'erreur 404 si l'on souhaite la personnaliser, cela n'est pas obligatoire
+     * 
+     * @param string $action
+     * @return self
+     */
+    public function onError(string $action): self
+    {
+        $this->errorAction = $action;
+        return $this;
+    }
+
+    /**
      * Cherche la route correspondante à l'url et redirige vers la méthode correspondante si celle-ci est trouvée
      */
     public function run()
@@ -55,6 +72,9 @@ class Router
             }
         }
         header('HTTP/1.0 404 Not Found');
+        if (!empty($this->errorAction)) {
+            return $this->execute($this->errorAction);
+        }
     }
 
     /**

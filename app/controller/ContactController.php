@@ -10,7 +10,8 @@ class ContactController extends Controller
     {
         $result = null;
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hp']) && empty($_POST['hp'])) {
+        // hp_check = honey pot check
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hp_check']) && empty($_POST['hp_check'])) {
             $result = Mailer::send($_POST);
         }
 

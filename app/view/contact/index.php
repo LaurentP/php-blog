@@ -39,7 +39,7 @@ $pageTitle = 'Contact';
         <textarea name="message" id="message" cols="30" rows="10" required></textarea>
     </p>
 
-    <input type="hidden" name="hp">
+    <input type="hidden" name="hp_check">
 
     <button type="submit" class="btn">Send</button>
 

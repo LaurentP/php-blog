@@ -75,14 +75,18 @@ class PostController extends Controller
      */
     public function show(array $params)
     {
+        $slug = $params[1];
         $id = (int) $params[2];
 
-        $postList = $this->postManager->read(['id' => $id, 'enabled' => 1], 0, 0);
+        $posts = $this->postManager->read(['id' => $id, 'slug' => $slug, 'enabled' => 1], 0, 0);
 
-        if (!$postList) return header('HTTP/1.0 404 Not Found');
+        if (!$posts) {
+            header('HTTP/1.0 404 Not Found');
+            return $this->render('/error404.php', []);
+        }
 
         $this->render('/post/show.php', [
-            'post' => $postList[0]
+            'post' => $posts[0]
         ]);
     }
 }

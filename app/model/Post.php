@@ -131,13 +131,11 @@ class Post
     /**
      * @return string
      */
-    public function getThumbnailImage(): string
+    public function getImageThumb(): string
     {
-        if ($this->image !== '') {
-            return pathinfo($this->image, PATHINFO_FILENAME) . '-min.' . pathinfo($this->image, PATHINFO_EXTENSION);
-        } else {
-            return '';
-        }
+        if ($this->image === '') return '';
+
+        return pathinfo($this->image, PATHINFO_FILENAME) . '-min.' . pathinfo($this->image, PATHINFO_EXTENSION);
     }
 
     /**

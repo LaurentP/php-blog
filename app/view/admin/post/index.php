@@ -48,11 +48,13 @@ $pageTitle = 'Admin';
         <a href="<?= HTTP_HOST ?>/admin/post/<?= $params['currentPage'] - 1 ?>">Prev</a>
     <?php
     }
+
     for ($i = 1; $i <= $params['requiredPages']; $i++) {
     ?>
         <a href="<?= HTTP_HOST ?>/admin/post/<?= $i ?>"><?= $i ?></a>
     <?php
     }
+    
     if ($params['currentPage'] < $params['requiredPages']) {
     ?>
         <a href="<?= HTTP_HOST ?>/admin/post/<?= $params['currentPage'] + 1 ?>">Next</a>

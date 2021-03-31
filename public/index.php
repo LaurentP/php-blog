@@ -41,6 +41,7 @@ $router->add('/', 'App\Controller\HomeController:index')
     ->add('/admin/post/delete/{id}', 'App\Controller\AdminPostController:delete')
     ->add('/admin/post', 'App\Controller\AdminPostController:post')
     ->add('/admin/post/{page}', 'App\Controller\AdminPostController:post')
-    ->add('/contact', 'App\Controller\ContactController:index');
+    ->add('/contact', 'App\Controller\ContactController:index')
+    ->onError('App\Controller\ErrorController:index');
 
 $router->run();

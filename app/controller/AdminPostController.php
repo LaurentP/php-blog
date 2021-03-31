@@ -138,7 +138,7 @@ class AdminPostController extends Controller
 
         $id = (int) $params[1];
 
-        $postList = $this->postManager->read(['id' => $id], 0, 0);
+        $post = $this->postManager->read(['id' => $id], 0, 0)[0];
 
         $error = null;
 
@@ -167,19 +167,9 @@ class AdminPostController extends Controller
 
                     // Si une image est envoyée, remplace le nom de l'image et supprime l'ancienne image
                     if ($imageResult['file_name'] !== '') {
-
                         ImageHandler::createThumb($imageResult['file_name'], $this->uploadDir);
-
                         $data['image'] = $imageResult['file_name'];
-
-                        $imageToDelete = $this->uploadDir . $postList[0]->getImage();
-                        if (file_exists($imageToDelete)) {
-                            unlink($imageToDelete);
-                        }
-                        $imageToDelete = $this->uploadDir . pathinfo($postList[0]->getImage(), PATHINFO_FILENAME) . '-min.' . pathinfo($postList[0]->getImage(), PATHINFO_EXTENSION);
-                        if (file_exists($imageToDelete)) {
-                            unlink($imageToDelete);
-                        }
+                        $this->deleteImage($post->getImage());
                     }
 
                     $this->postManager->update($data, $id);
@@ -191,7 +181,7 @@ class AdminPostController extends Controller
         }
 
         $this->render('/admin/post/edit.php', [
-            'post' => $postList[0],
+            'post' => $post,
             'error' => $error,
             'csrf_token' => $_SESSION['admin']['csrf_token']
         ]);
@@ -206,7 +196,7 @@ class AdminPostController extends Controller
 
         $id = (int) $params[1];
 
-        $postList = $this->postManager->read(['id' => $id], 0, 0);
+        $post = $this->postManager->read(['id' => $id], 0, 0)[0];
 
         $error = null;
 
@@ -217,24 +207,31 @@ class AdminPostController extends Controller
             }
 
             if ($error === null) {
-
                 $this->postManager->delete($id);
-                $imageToDelete = $this->uploadDir . $postList[0]->getImage();
-                if (file_exists($imageToDelete)) {
-                    unlink($imageToDelete);
-                }
-                $imageToDelete = $this->uploadDir . pathinfo($postList[0]->getImage(), PATHINFO_FILENAME) . '-min.' . pathinfo($postList[0]->getImage(), PATHINFO_EXTENSION);
-                if (file_exists($imageToDelete)) {
-                    unlink($imageToDelete);
-                }
+                $this->deleteImage($post->getImage());
                 header('Location:/admin');
             }
         }
 
         $this->render('/admin/post/delete.php', [
-            'post' => $postList[0],
+            'post' => $post,
             'error' => $error,
             'csrf_token' => $_SESSION['admin']['csrf_token']
         ]);
+    }
+
+    /**
+     * @params string $fileName
+     * @return void
+     */
+    private function deleteImage(string $fileName): void
+    {
+        $imageToDelete = $this->uploadDir . $fileName;
+        
+        if (file_exists($imageToDelete)) unlink($imageToDelete);
+        
+        $imageToDelete = $this->uploadDir . pathinfo($fileName, PATHINFO_FILENAME) . '-min.' . pathinfo($fileName, PATHINFO_EXTENSION);
+        
+        if (file_exists($imageToDelete)) unlink($imageToDelete);
     }
 }

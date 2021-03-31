@@ -13,12 +13,12 @@ $pageTitle = 'Blog';
         <h3><?= $post->getTitle() ?></h3>
         <time><?= date('F j, Y, g:i A', strtotime($post->getCreatedAt())) ?></time>
         <?php
-        if ($post->getThumbnailImage() !== '') {
-            $imagePath = ROOT_DIRECTORY . '/public/upload/post/' . $post->getThumbnailImage();
+        if ($post->getImageThumb() !== '') {
+            $imagePath = ROOT_DIRECTORY . '/public/upload/post/' . $post->getImageThumb();
             if (file_exists($imagePath)) {
         ?>
                 <div>
-                    <img src="<?= HTTP_HOST . '/upload/post/' . $post->getThumbnailImage() ?>" alt="<?= $post->getTitle() ?>">
+                    <img src="<?= HTTP_HOST . '/upload/post/' . $post->getImageThumb() ?>" alt="<?= $post->getTitle() ?>">
                 </div>
         <?php
             }
@@ -36,11 +36,13 @@ $pageTitle = 'Blog';
         <a href="<?= HTTP_HOST ?>/blog/<?= $params['currentPage'] - 1 ?>">Prev</a>
     <?php
     }
+
     for ($i = 1; $i <= $params['requiredPages']; $i++) {
     ?>
         <a href="<?= HTTP_HOST ?>/blog/<?= $i ?>"><?= $i ?></a>
     <?php
     }
+    
     if ($params['currentPage'] < $params['requiredPages']) {
     ?>
         <a href="<?= HTTP_HOST ?>/blog/<?= $params['currentPage'] + 1 ?>">Next</a>
