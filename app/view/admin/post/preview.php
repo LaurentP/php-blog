@@ -1,14 +1,12 @@
 <?php
 
-$pageLayout = ROOT_DIRECTORY . '/app/view/admin/layout.php';
+$pageLayout = ROOT_DIRECTORY . '/app/view/layout.php';
 
-$pageTitle = 'Delete post';
+$pageTitle = $params['post']->getTitle();
 
 ?>
 
-<h1>Delete post</h1>
-
-<h3><?= $params['post']->getTitle() ?></h3>
+<h1><?= $params['post']->getTitle() ?></h1>
 <time class="date"><?= date('F j, Y, g:i A', strtotime($params['post']->getCreatedAt())) ?></time>
 
 <?php
@@ -27,16 +25,4 @@ if ($imagePath !== $imageDir && file_exists($imagePath)) {
 }
 ?>
 
-<?php if ($params['error'] !== null) : ?>
-    <div class="alert-error">
-        <p><?= $params['error'] ?></p>
-    </div>
-<?php endif; ?>
-
-<form method="POST">
-    <input type="hidden" name="delete" value="true">
-    <input type="hidden" name="csrf_token" value="<?= $params['csrf_token'] ?>">
-    <div class="form-footer">
-        <button type="submit" class="btn">Delete</button>
-    </div>
-</form>
+<p><?= $params['post']->getContent() ?></p>

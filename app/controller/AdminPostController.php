@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Asset\TextToSlug;
 use App\Model\PostManager;
-use App\Asset\ImageHandler;
+use App\Helpers\TextToSlug;
+use App\Helpers\ImageHandler;
 
 class AdminPostController extends Controller
 {
@@ -127,6 +127,20 @@ class AdminPostController extends Controller
             'error' => $error,
             'csrf_token' => $_SESSION['admin']['csrf_token']
         ]);
+    }
+
+    /**
+     * @param array $params
+     */
+    public function preview(array $params)
+    {
+        if (!isset($_SESSION['admin'])) return header('Location:/admin');
+
+        $id = (int) $params[1];
+
+        $post = $this->postManager->read(['id' => $id], 0, 0)[0];
+
+        $this->render('/admin/post/preview.php', ['post' => $post]);
     }
 
     /**

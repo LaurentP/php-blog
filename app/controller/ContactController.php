@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Asset\Mailer;
+use App\Helpers\Mailer;
 
 class ContactController extends Controller
 {

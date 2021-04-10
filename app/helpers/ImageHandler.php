@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Asset;
+namespace App\Helpers;
 
 class ImageHandler
 {

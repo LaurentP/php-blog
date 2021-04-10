@@ -6,31 +6,32 @@ $pageTitle = 'Home';
 
 ?>
 
-<h1>Home</h1>
+<h1>Welcome</h1>
 
-<h2>Latest posts</h2>
-
-<?php foreach ($params['latestPosts'] as $post) : ?>
-    <div>
-        <h3><?= $post->getTitle() ?></h3>
-        <time><?= date('F j, Y, g:i A', strtotime($post->getCreatedAt())) ?></time>
-        <?php
-        if ($post->getImageThumb() !== '') {
-            $imagePath = ROOT_DIRECTORY . '/public/upload/post/' . $post->getImageThumb();
-            if (file_exists($imagePath)) {
-        ?>
-                <div>
-                    <img src="<?= HTTP_HOST . '/upload/post/' . $post->getImageThumb() ?>" alt="<?= $post->getTitle() ?>">
-                </div>
-        <?php
-            }
-        }
-        ?>
-        <p><?= $post->getShortContent() ?></p>
-        <a href="./post/<?= $post->getSlug() . '-' . $post->getId() ?>">Read</a>
+<section>
+    <h2>Most recent posts</h2>
+    <br>
+    <div class="col-3">
+        <?php foreach ($params['latestPosts'] as $post) : ?>
+            <div>
+                <h3><?= $post->getTitle() ?></h3>
+                <time class="date"><?= date('F j, Y, g:i A', strtotime($post->getCreatedAt())) ?></time>
+                <?php
+                if ($post->getImageThumb() !== '') {
+                    $imagePath = ROOT_DIRECTORY . '/public/upload/post/' . $post->getImageThumb();
+                    if (file_exists($imagePath)) {
+                ?>
+                        <img src="<?= HTTP_HOST . '/upload/post/' . $post->getImageThumb() ?>" alt="<?= $post->getTitle() ?>" class="thumbnail">
+                <?php
+                    }
+                }
+                ?>
+                <p><?= $post->getShortContent() ?></p>
+                <br>
+                <a href="./post/<?= $post->getSlug() . '-' . $post->getId() ?>" class="btn">Read</a>
+            </div>
+        <?php endforeach; ?>
     </div>
-<?php endforeach; ?>
-
-<div>
-    <p><a href="<?= HTTP_HOST ?>/blog">View all</a></p>
-</div>
+    <br>
+    <a href="<?= HTTP_HOST ?>/blog">View all</a>
+</section>
