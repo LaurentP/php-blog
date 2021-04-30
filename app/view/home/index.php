@@ -6,9 +6,12 @@ $pageTitle = 'Home';
 
 ?>
 
-<h1>Welcome</h1>
+<header class="home-header">
+    <h1>PHP Blog</h1>
+    <p>Blog written in vanilla PHP and object-oriented programming</p>
+</header>
 
-<section>
+<section class="section">
     <h2>Most recent posts</h2>
     <br>
     <div class="col-3">

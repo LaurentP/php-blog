@@ -23,10 +23,6 @@
                     <li><a href="<?= HTTP_HOST ?>/">Home</a></li>
                     <li><a href="<?= HTTP_HOST ?>/blog">Blog</a></li>
                     <li><a href="<?= HTTP_HOST ?>/contact">Contact</a></li>
-                    <li><a href="<?= HTTP_HOST ?>/admin">Admin</a></li>
-                    <?php if (isset($_SESSION['admin'])) : ?>
-                    <li><a href="<?= HTTP_HOST ?>/admin/logout">Logout</a></li>
-                <?php endif; ?>
                 </ul>
                 <form action="<?= HTTP_HOST ?>/blog/search" method="GET" class="navbar-search">
                     <input type="text" name="q" placeholder="Search..." class="form-control">

@@ -6,8 +6,12 @@ $pageTitle = 'Error 404';
 
 ?>
 
-<h1>Error 404</h1>
+<section class="section">
 
-<p>Sorry, the page you are looking for does not exist.</p>
+    <h1>Error 404</h1>
 
-<a href="<?= HTTP_HOST ?>/">Return to the homepage</a>
+    <p>Sorry, the page you are looking for does not exist.</p>
+
+    <a href="<?= HTTP_HOST ?>/">Return to the homepage</a>
+
+</section>

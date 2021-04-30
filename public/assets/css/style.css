@@ -84,10 +84,6 @@ body {
 
 .container {
     flex: 1;
-    margin: 0 auto;
-    max-width: 1440px;
-    width: 100%;
-    padding: 16px;
 }
 
 .col-3 {
@@ -115,6 +111,33 @@ h3 {
 a {
     text-decoration: underline;
     color: #1976d2;
+}
+
+.home-header {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(45deg, #1565c0, #1976d2, #1565c0);
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 0 4px #000;
+}
+
+.home-header h1 {
+    margin-top: -24px;
+    font-size: 60px;
+}
+
+.home-header p {
+    font-size: 24px;
+}
+
+.section {
+    margin: 0 auto;
+    max-width: 1440px;
+    width: 100%;
+    padding: 16px;
 }
 
 .date {
@@ -407,11 +430,11 @@ footer {
         margin-right: 16px;
     }
     .col-3 {
-        justify-content: space-between;
-
+        justify-content: left;
     }
     .col-3 > div {
         width: calc(50% - 8px);
+        padding: 0 8px;
     }
 }
 
@@ -419,8 +442,5 @@ footer {
     .col-3 > div {
         /* Pour 3 colonnes : (16 x 2) / 3 = 10,6 donc 11px à soustraire car column-gap de .col-3 = 16px */
         width: calc((100% / 3) - 11px);
-    }
-    .col-3 > div:last-of-type {
-        margin: 0 auto 0 16px;
     }
 }

@@ -19,7 +19,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $latestPosts = $this->postManager->read(['enabled' => '1'], 4, 0);
+        $latestPosts = $this->postManager->read(['enabled' => '1'], 6, 0);
 
         $this->render('/home/index.php', [
             'latestPosts' => $latestPosts
